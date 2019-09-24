@@ -5,5 +5,5 @@ This will remain the case unless it's easier for everyone to create seperate rep
 
 Folders will be added as homework is released.
 
-# Current Directories
+## Current Directories
 [homework-1](homework-1)
