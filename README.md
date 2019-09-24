@@ -7,4 +7,5 @@ Folders will be added as homework is released.
 
 ## Current Directories
 [homework-1](homework-1)
+
 _all future homework directies added as they are assigned_
