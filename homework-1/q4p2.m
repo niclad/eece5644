@@ -22,11 +22,11 @@ pRange = [-6 6]; % plot range
 %% figure one for likelihoods (class-conditional pdfs)
 figure(1)
 hold on
-fplot(px1, pRange, '--b')   % plot the function px1
-fplot(px2, pRange, '--r')   % plot the function px2 
-plot([x1 x1], [0 1], ':k')  % plot left decision boundary
-plot([x2 x2], [0 1], ':k')  % plot right decision boundary
-ylim([0 0.4])               % y-axis range
+fplot(px1, pRange, '-b')   % plot the function px1
+fplot(px2, pRange, '-r')   % plot the function px2 
+xline(x1, '--k', x1);      % plot left decision boundary
+xline(x2, '--k', x2);      % plot right decision boundary
+ylim([0 0.4])              % y-axis range
 title({'Decision Boundary for Class-Conditional PDFs'})
 xlabel('Distance from mean')
 ylabel('P(x|L=l)')
@@ -37,10 +37,10 @@ print -depsc plot1.eps      % save plot as an eps file
 %% figure 2 for posterior probabilities
 figure(2)
 hold on
-fplot(p1x, pRange, '-g')    % plot the function p1x
-fplot(p2x, pRange, '-m')    % plot the function p2x
-plot([x1 x1], [0 1], ':k')  % plot left decision boundary
-plot([x2 x2], [0 1], ':k')  % plot right decision boundary
+fplot(p1x, pRange, '-b')    % plot the function p1x
+fplot(p2x, pRange, '-r')    % plot the function p2x
+xline(x1, '--k', x1);       % plot left decision boundary
+xline(x2, '--k', x2);       % plot right decision boundary
 ylim([0 1])                 % y-axis range
 title('Decision Boundary for Posterior Probabilities')
 xlabel('Distance from mean')
