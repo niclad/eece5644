@@ -13,5 +13,6 @@ Folders will be added as homework is released.
 	4. [plot1.eps](homework-1/plot1.eps) - _plot for question 4, problem 2 (GitHub will not display)_  
 	5. [plot2.eps](homework-1/plot2.eps) - _plot for question 4, problem 2 (GitHub will not display)_ 
 	6. [q5p3.m](homework-1/q5p3.m) - _code for question 5, problem 3_  
+	7. [main.tex](homework-1/main.tex) - _Latex file where homework answers are written_  
 
 _all future homework directies added as they are assigned_
