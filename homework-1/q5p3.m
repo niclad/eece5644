@@ -18,7 +18,7 @@ function [samplesN] = q5p3(N, n, mu, sigma)
     % linear transform coeffs
     % according to matlab this is true:
     % syms A s; solve((A*transpose(A)) - s == 0, A)
-    A = sigma^(1/2);    % A = nxn matrix therefore sigma must nxn
+    A = sqrtm(sigma);    % A = nxn matrix therefore sigma must nxn
     b = mu;             % b = mu is a row vector
 
     % loop through N samples adding n-dim vectors
