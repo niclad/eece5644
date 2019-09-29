@@ -1,0 +1,12 @@
+%% Nicolas Tedori
+%  produces N samples of independent and identically ...
+% distributed (iid) n-dimensional random vectors
+% N = samples
+% n = dimension
+% mu = mean
+% sigma = variance
+% samplesN = N number iid n-dimensional random vectors stored in a vector
+
+function [samplesN] = q5p3(N, n, mu, sigma)
+    pZeta = (1/((
+end
