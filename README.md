@@ -15,4 +15,6 @@ Folders will be added as homework is released.
 	6. [q5p3.m](homework-1/q5p3.m) - _code for question 5, problem 3_  
 	7. [main.tex](homework-1/main.tex) - _Latex file where homework answers are written_  
 
+2. [homework-2](homework-2)
+	1. [q2.m](homework-2/q2.m) - _code for question 2_  
 _all future homework directies added as they are assigned_
