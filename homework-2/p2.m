@@ -12,7 +12,7 @@ c1Cov   = [3, 1; 1, 0.8];
 c2Cov   = c1Cov;
 pC1     = 0.5;
 pC2     = pC1;
-plot    = 'q2p1';
+plot    = 'q2p2';
 
 %% generate iids and use a MAP classifier
 iid = MAP_Classify(samples, c1Mu, c2Mu, c1Cov, c2Cov, pC1, pC2, plot);

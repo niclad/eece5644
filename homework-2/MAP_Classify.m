@@ -48,7 +48,7 @@ fprintf('Plotting and saving ground truth data\n')
 hold on
 figure(1)
 gscatter(numData(:,1), numData(:,2), gndTruth.class, 'br', 'ox')
-title({'Samples=400, means=[0;0], [3;3]';'Identity Cov; equal priors'})
+title('Ground Truth from defined means, priors, and covariances')
 xlabel('x1')
 ylabel('x2')
 saveas(gcf, strcat('gndTruth_', plot), 'epsc')   % save plot as an eps
