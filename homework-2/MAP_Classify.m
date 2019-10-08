@@ -93,6 +93,7 @@ hold off
 %% determine the error
 fprintf('Determining the error in MAP classifier....\n')
 
+% loop comparing errors
 errorsFound = 0;
 for i = 1:samples
     if gndTruth{i, 3} ~= mapData{i, 3}
@@ -101,8 +102,8 @@ for i = 1:samples
 end
 
 % should always be true unless my code is more garbage than I thought
-classifierError = (errorsFound / samples) * 100;
-fprintf('Classifier error: %.3f%%\n', classifierError)
+classifierError = (errorsFound / samples) * 100
+fprintf('Classifier error: %6.3f%%\n', classifierError)
 
 iid = gndTruth;
 end
