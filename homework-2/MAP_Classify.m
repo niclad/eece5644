@@ -86,7 +86,7 @@ figure(2)
 gscatter(numData(:,1), numData(:,2), mapData.class, 'br', 'ox')
 title({'MAP classifier data'})
 xlabel('x1')
-ylabel('y1')
+ylabel('x1')
 saveas(gcf, strcat('mapClassifier_', plot), 'epsc')   % save plot as an eps
 hold off
 
