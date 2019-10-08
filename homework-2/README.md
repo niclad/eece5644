@@ -11,4 +11,4 @@ All code is written in MATLAB.
 7. [p6.m](p6.m) - _code for problem question 2, problem 6 - calls [MAP_Classify.m](MAP_Classify.m)_  
 8. [run_functions.m](run_functions.m) - _a MATLAB script that runs all the functions (p1.m - p6.m) as a batch_  
 
-**NOTE** all eps files will _not_ be displayed by GitHub.
+**NOTE:** no _.eps_ files will _not_ be displayed by GitHub.
