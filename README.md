@@ -6,15 +6,8 @@ This will remain the case unless it's easier for everyone to create seperate rep
 Folders will be added as homework is released.
 
 ## Current Directories
-1. [homework-1](homework-1)
-	1. [q2p3.m](homework-1/q2p3.m) - _code for question 2, problem 3_  
-	2. [q2p3.eps](homework-1/q2p3.eps) - _plot for question 2, problem 3 (GitHub will not display)_  
-	3. [q4p2.m](homework-1/q4p2.m) - _code for question 4, problem 2_  
-	4. [plot1.eps](homework-1/plot1.eps) - _plot for question 4, problem 2 (GitHub will not display)_  
-	5. [plot2.eps](homework-1/plot2.eps) - _plot for question 4, problem 2 (GitHub will not display)_ 
-	6. [q5p3.m](homework-1/q5p3.m) - _code for question 5, problem 3_  
-	7. [main.tex](homework-1/main.tex) - _Latex file where homework answers are written_  
+1. [homework-1](homework-1) - All code files for homework 1.
 
-2. [homework-2](homework-2)
-	1. [q2.m](homework-2/q2.m) - _code for question 2_  
+2. [homework-2](homework-2) - All code files for homework 2.
+
 _all future homework directies added as they are assigned_
