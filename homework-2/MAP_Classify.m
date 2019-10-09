@@ -51,7 +51,7 @@ gscatter(numData(:,1), numData(:,2), gndTruth.class, 'br', 'ox')
 title('Ground Truth from defined means, priors, and covariances')
 xlabel('x1')
 ylabel('x2')
-saveas(gcf, strcat('gndTruth_', plot), 'epsc')   % save plot as an eps
+saveas(gcf, strcat('images/gndTruth_', plot), 'epsc')   % save plot as an eps
 hold off
 
 %% MAP classifier
@@ -79,17 +79,6 @@ mapData.class = categorical(mapData.class);
 
 fprintf('Classification complete.\n')
 
-%% plot the MAP data
-fprintf('Plotting and saving MAP classified data\n')
-hold on
-figure(2)
-gscatter(numData(:,1), numData(:,2), mapData.class, 'br', 'ox')
-title({'MAP classifier data'})
-xlabel('x1')
-ylabel('x1')
-saveas(gcf, strcat('mapClassifier_', plot), 'epsc')   % save plot as an eps
-hold off
-
 %% determine the error
 fprintf('Determining the error in MAP classifier....\n')
 
@@ -102,8 +91,21 @@ for i = 1:samples
 end
 
 % should always be true unless my code is more garbage than I thought
-classifierError = (errorsFound / samples) * 100
+classifierError = (errorsFound / samples) * 100;
 fprintf('Classifier error: %6.3f%%\n', classifierError)
+
+%% plot the MAP data
+fprintf('Plotting and saving MAP classified data\n')
+hold on
+figure(2)
+gscatter(numData(:,1), numData(:,2), mapData.class, 'br', 'ox')
+errorCaption = sprintf('MAP classifier data. Error = %6.3f%%', classifierError);
+title(errorCaption)
+xlabel('x1')
+ylabel('x2')
+saveas(gcf, strcat('images/mapClassifier_', plot), 'epsc')   % save plot as an eps
+hold off
+
 
 iid = gndTruth;
 end
