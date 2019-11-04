@@ -51,12 +51,12 @@ samples = [10, 100, 1000, 10000]; % test samples
 % end
 
 
-figure(2)
-scatter(data(:, 1), data(:, 2), '.r', 'LineWidth', 0.25) 
-title('Scatter plot of observations')
-xlabel('x1')
-ylabel('x2')
-saveas(gcf,'scatter','epsc')
+% figure(2)
+% scatter(data(:, 1), data(:, 2), '.r', 'LineWidth', 0.25) 
+% title('Scatter plot of observations')
+% xlabel('x1')
+% ylabel('x2')
+% saveas(gcf,'scatter','epsc')
 %% EM
 % initialize needed matrices for information needed later
 numComp  = 6;    % number of GMM components to test
