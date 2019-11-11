@@ -25,18 +25,14 @@ birdImg  = imread('42049_colorBird.jpg');	% load bird image
 % k = 2:5;
 k = 2;
 szK = size(k);
-maxIter = 50;
+maxIter = 20;
 
 for i = 1:szK
     centroids = init_centroids(planeNorm, k);
-    prevCentr = centroids;
-    n = 1;
-    while isequal(prevCentr, centroids) || (n < maxIter)
-        indices   = closest_centroids(planeNorm, centroids);
-        centroids = compute_centroids(planeNorm, indices, i);
-        prevCentr = centroids;
-        n         = n + 1;
-    end
+    
+    for n = 1:maxIter
+        indices = closest_centroids(data, centroids);
+        centroids = 
     
 end
 

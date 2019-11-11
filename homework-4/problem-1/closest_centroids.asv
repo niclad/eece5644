@@ -1,0 +1,16 @@
+function [ indices ] = closest_centroids(data, centroids, k)
+%CLOSEST_CENTROIDS Find the closest centroids to a data point
+%   Detailed explanation goes here
+
+[m, n]  = size(data);               % get the dimensions of data
+indices = zeros(size(data, 1), 1);  % initialize array for indices
+numObs  = m;                % get number of data obs
+dists   = zeros(m, n);
+
+% calculate the euclidean distances from a point to a centroid
+for i = 1:k
+    
+end
+
+end
+
