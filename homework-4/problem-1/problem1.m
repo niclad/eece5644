@@ -3,6 +3,9 @@
 % November 14, 2019
 % Homework 4 - Problem 1
 
+% add the functions path
+addpath(genpath('./functions/'))
+
 % time program
 timeStart = cputime;
 
