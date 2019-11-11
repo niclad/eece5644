@@ -10,4 +10,12 @@ Folders will be added as homework is released.
 
 2. [homework-2](homework-2) - All code files for homework 2.
 
+3. [midterm](midterm) - All the files for the midterm.
+	- *Note:* these files are techinically incorrect. I was not able to complete the midterm, so there is stuff missing.
+
+4. [homework-3](homework-3) - All code files for homework 3.
+	- *Note:* I was not able to complete homework 3, so there are incomplete problems.
+
+5. [homework-4](homework-4) - All code files for homework 4.
+
 _all future homework directies added as they are assigned_
