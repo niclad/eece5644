@@ -60,7 +60,6 @@ for k = 2:5
     ylabel('y-pixels')
     
 end
-saveas(gcf,'images/km_plane','epsc')   % save plot as an eps
 
 % k-means for bird
 figure(2)
@@ -89,7 +88,6 @@ for k = 2:5
     ylabel('y-pixels')
     
 end
-saveas(gcf,'images/km_bird','epsc')   % save plot as an eps
 
 % get time to run k-means
 kmTime = cputime - kmStart;
@@ -125,7 +123,6 @@ for k = 2:5
     ylabel('y-pixels')
     
 end
-saveas(gcf,'images/gmm_plane','epsc')   % save plot as an eps
 
 % gmm for bird
 figure(4)
@@ -134,10 +131,10 @@ for k = 2:5
     % run "EM" on data
     % Note: this is not correct - only using Matlabs so that I can write
     % the rest of the code
-    birdGM = fitgmdist(birdNorm, k);
+    planeGM = fitgmdist(planeNorm, k);
         
     % get a cluster number for an observation.
-    indices = map_classify(birdNorm, birdGM, k);
+    indices = map_classify(planeNorm, planeGM, k);
     
     % plot the image for the k
     subplot(2, 2, k-1);
@@ -148,12 +145,11 @@ for k = 2:5
         plot(plot_data(:,1), plot_data(:,2), colors{i}, 'MarkerSize', 1);
         hold on
     end
-    title(sprintf('GMM bird jpg for k=%.0f', k));
+    title(sprintf('GMM plane jpg for k=%.0f', k));
     xlabel('x-pixels')
     ylabel('y-pixels')
     
 end
-saveas(gcf,'images/gmm_bird','epsc')
 
 % time to run gmm
 gmmTime = cputime - gmmStart;
@@ -161,4 +157,4 @@ fprintf('Time to run GMM: %.1f seconds\n', gmmTime)
 
 %% Calculate the time required to run
 timeEnd = cputime - timeStart;
-fprintf('Total runtime: %.1f seconds\n', timeEnd) 
+fprintf('Time to run: %.1f seconds\n', timeEnd) 

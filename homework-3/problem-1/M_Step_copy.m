@@ -1,4 +1,4 @@
-function [ mu, covm, wgt ] = M_Step(x, prob, nc)
+function [ mu, covm, wgt ] = M_Step_copy(x, prob, nc)
 %M_STEP Update component parameters
 %   Detailed explanation goes here
 
@@ -12,11 +12,18 @@ prob;
 compSum = sum(prob, 1);
 
 %get component means (pretty sure this is incorrect)
-for n = 1:ptNum
-    for k = 1:nc
-        mu(:,:,k) = (1 / compSum(k)) * sum(prob(:, k) * x(n, :));
+% for n = 1:ptNum
+%     for k = 1:nc
+%         mu(:,:,k) = (1 / compSum(k)) * sum(prob(:, k) * x(n, :));
+%     end
+% end
+
+for k = 1:nc
+    for n = 1:ptNum
+        mu(:,:,k) = (1 / compSum(k)) * sum(prob(:, k) .* x);
     end
 end
+
 compSum;
 % get component covariances
 % VERY IMPORTANT NOTE: This is mathematically sound, HOWEVER, if the values

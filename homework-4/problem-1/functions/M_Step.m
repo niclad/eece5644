@@ -2,6 +2,8 @@ function [ mu, covm, wgt ] = M_Step(x, prob, nc)
 %M_STEP Update component parameters
 %   Detailed explanation goes here
 
+% IMPORTANT NOTE: this is far too slow to be usable!!!
+
 ptNum   = size(x, 1);
 compSum = zeros(1, nc);
 mu      = zeros(1, 2, nc);
@@ -11,7 +13,7 @@ prob;
 
 compSum = sum(prob, 1);
 
-%get component means (pretty sure this is incorrect)
+%get component means
 for n = 1:ptNum
     for k = 1:nc
         mu(:,:,k) = (1 / compSum(k)) * sum(prob(:, k) * x(n, :));
