@@ -45,8 +45,8 @@ scatter(data(indices==1, 1), data(indices==1, 2), '.b');    % plot class -1
 hold on
 scatter(data(indices==2, 1), data(indices==2, 2), '.r');    % plot class +1
 % configure the axes settings
-set(gca, 'XAxisLocation', 'origin', 'YAxisLocation', 'origin', ...
-    'linewidth', 1, 'fontsize', 12, 'fontweight', 'bold', 'layer', 'top');
+%set(gca, 'XAxisLocation', 'origin', 'YAxisLocation', 'origin', ...
+%    'linewidth', 1, 'fontsize', 12, 'fontweight', 'bold', 'layer', 'top');
 box on
 axis([-3.5 3.5 -3.5 3.5])           % axis range and domain
 xlabel('x1')                        % x-axis label
@@ -54,6 +54,8 @@ ylabel('x2')                        % y-axis label
 legend({'class -1', 'class +1'})    % data key
 title('Training Data')
 hold off
+
+saveas(gcf,'images/raw_data','epsc')       % save the plot
 
 %{
 Note: if the data shuffled correctly, the plot produced prior to shuffling
@@ -124,6 +126,7 @@ bestL = completeResultsL{I};
 title({sprintf('Error for each fold. Min e=%.3E', errs(I)); 'Linear-SVM'});
 xlabel('Fold number')
 ylabel('Error')
+saveas(gcf,'images/lsvm_err','epsc')       % save the plot
 
 %% Get Gaussian-SVM values
 
@@ -159,14 +162,21 @@ bestG = completeResultsG{I};
 title({sprintf('Error for each fold. Min e=%.3E', errs(I));'Gaussian-SVM'});
 xlabel('Fold number')
 ylabel('Error')
+saveas(gcf,'images/gsvm_err','epsc')       % save the plot
 
 
 %% test on original data 
 figure(4)
-data3 = [data, vecnorm(data, 2, 2).^2];
-bestL.train(data3, indices);
+data3 = data;
+eqT1 = isequal(data3, data);
+data3 = [data3, (vecnorm(data3, 2, 2).^2)];
+eqT2 = isequal(data3(:,1:2), data);
+%fprintf('data == data3 = %.0f\n data == data3(:,1:2) = %.0f',eqT1, eqT2)
+bestL.train(data3, indices, "Best L-SVM for train data");
+saveas(gcf,'images/bestL_train','epsc')       % save the plot
 figure(5)
-bestG.train(data, indices);
+bestG.train(data, indices, "Best G-SVM for train data");
+saveas(gcf,'images/bestG_train','epsc')       % save the plot
 
 %% regenerate data to test on
 [fullData,fullIndices,~] = generate_data(mu1, sig1, [wgt1, wgt2], rRange, ...
@@ -174,17 +184,19 @@ bestG.train(data, indices);
 
 % shuffle the rows of the data
 nRows   = size(fullData, 1);        % the number of observations
-order   = randperm(nRows);      % the new order of the data (and indices)
-data    = [fullData, fullIndices];      % combine the matrices for shuffling
-data    = data(order, :);       % shuffle the rows
-indices = data(:,end);          % get the shuffled indiced
-data    = data(:,1:end-1);      % get the data into its own matrix
+order   = randperm(nRows);          % the new order of the data (and indices)
+fullData    = [fullData, fullIndices];  % combine the matrices for shuffling
+fullData    = fullData(order, :);       % shuffle the rows
+fullIndices = fullData(:,end);          % get the shuffled indiced
+fullData    = fullData(:,1:end-1);      % get the data into its own matrix
 
-fd3 = [fullData, vecnorm(fullData, 2, 2).^2];
+fd3 = [fullData, (vecnorm(fullData, 2, 2).^2)];
 figure(6)
-bestL.train(fd3, fullIndices);
+bestL.train(fd3, fullIndices, "Best L-SVM for test data");
+saveas(gcf,'images/bestL_test','epsc')       % save the plot
 figure(7)
-bestG.train(fullData, fullIndices);
+bestG.train(fullData, fullIndices, "Best G-SVM for test data");
+saveas(gcf,'images/bestG_test','epsc')       % save the plot
 
 %% Calculate the time required to run
 timeEnd = cputime - timeStart;

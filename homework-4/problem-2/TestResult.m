@@ -27,7 +27,7 @@ classdef TestResult
             obj.mdl = myMdl;
         end
         
-        function R = train(obj,data, label)
+        function R = train(obj,data, label, title)
             %METHOD1 Summary of this method goes here
             %   Detailed explanation goes here
             if ~isempty(obj.w)
@@ -43,19 +43,23 @@ classdef TestResult
             end
             
             
-            obj.plotGroup(data, label, R);
+            obj.plotGroup(data, label, R, title);
         end
         
-        function p = plotGroup(obj, data, label, R)
+        function p = plotGroup(obj, data, label, R, titleStr)
             classErr = sum(label ~= R);
             classErr = (classErr / length(data)) * 100;
+            misclass = label ~= R;
             
             plot(data(R==1, 1), data(R==1, 2), '.b')
             hold on
             plot(data(R==2, 1), data(R==2, 2), '.r')
+            plot(data(misclass==1,1), data(misclass==1,2), 'xg')
+            legend({'Class -1', 'Class +1', 'Misclassified'})
             xlabel('x1')
             ylabel('x2')
-            title(sprintf('P(error)=%3.2f', classErr))
+            titleStr = string(titleStr);
+            title(sprintf('%s \n error=%3.2f',titleStr, classErr))
         end
     end
 end
