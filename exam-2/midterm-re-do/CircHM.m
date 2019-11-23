@@ -57,6 +57,7 @@ end
 labels = {'Circle', 'True pos.', 'Landmarks'};
 legend(labels,'Location',[0.35,0.01,0.35,0.05],'Orientation','Horizontal')
 hold off
+saveas(gcf,'images/landmarks','epsc') 
 
 %% plot map objective
 sigma = 0.3;
@@ -84,16 +85,18 @@ title('MAP estimation objective w/o landmarks')
 xlabel('x')
 ylabel('y')
 box on
+legend({'Contours','Circle', 'True pos.', 'Landmarks'});
 hold off
+saveas(gcf,'images/init_cont','epsc') 
 
 %% plot map objective for the sensors
 x = -2:0.01:2;
 y = x;
 [xx,yy]=meshgrid(x,y);
 valgrid = [xx(:),yy(:)];
-sx = 0.1;
+sx = 0.25;
 sy = sx;
-si = 0.01;
+si = 0.1;
 
 figure(3)
 
@@ -117,11 +120,11 @@ for i = 1:4 % testing with 1 lm
     plot(ki{i}(:, 1), ki{i}(:, 2), 'ob')
     title(sprintf('MAP estimate for %.0f sensors',i))
     
-    labels = {'Contours','Circle', 'True pos.', 'Landmarks'};
-    legend(labels,'Location',[0.35,0.01,0.35,0.05],'Orientation','Horizontal')
+    legend({'Contours','Circle', 'True pos.', 'Landmarks'});
     hold off
+    imgname = sprintf('images/final_cont_%.0f',i);
+    saveas(gcf,imgname,'epsc') 
 end
-
 %% display the runtime for the whole program
 timeEnd = cputime - timeStart;
 fprintf('Total runtime: %0.3f s\n', timeEnd)
