@@ -7,3 +7,6 @@ Problem 1 contains all the images, functions, data, and scripts necessary for pr
 
 ## [Problem 2](problem-2)
 All the files necessary for problem 2. See the read me in problem 2 for more information.
+
+## [midterm-re-do](midterm-re-do)
+Re-attempt of the 2nd problem from exam 1. See read me in [midterm-re-do](midterm-re-do) for more info.
