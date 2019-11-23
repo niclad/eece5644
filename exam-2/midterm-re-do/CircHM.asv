@@ -25,7 +25,7 @@ k4 = k_vals(4);
 ki = {k1, k2, k3, k4};
 
 % generate a circle
-circPts = 0:0.1:(2 * pi);
+circPts = [0:0.1:(2 * pi)];
 circX = cos(circPts);
 circY = sin(circPts);
 
@@ -49,10 +49,10 @@ for i = 1:4
     xlabel('x')
     ylabel('y')
     hold on
-
+    
     plot(truept.x, truept.y, '+r')
     plot(ki{i}(:, 1), ki{i}(:, 2), 'ob')
-    title(sprintf('%.0f landmarks placed on a circle',i))
+    title('Generated landmarks placed on a circle')
 end
 labels = {'Circle', 'True pos.', 'Landmarks'};
 legend(labels,'Location',[0.35,0.01,0.35,0.05],'Orientation','Horizontal')
@@ -87,41 +87,26 @@ box on
 hold off
 
 %% plot map objective for the sensors
-x = -2:0.01:2;
+x = -2:0.1:2;
 y = x;
 [xx,yy]=meshgrid(x,y);
 valgrid = [xx(:),yy(:)];
-sx = 0.1;
-sy = sx;
-si = 0.01;
 
 figure(3)
-
-for i = 1:4 % testing with 1 lm
-    %subplot(2, 2, i)
-    figure(i + 2)
-    % plot the contours
-    rangeMeas = GenerateRange(truept,ki{i},i,si);
-    lmMeas    = [ki{i},rangeMeas];
-    res = optimal_eq(xx,yy,sx,sy,si,i,lmMeas);
-    contourf(x,y,res,'ShowText','on')
-    hold on
+for i = 1:4
     %plot the circle
+    subplot(2, 2, i)
     plot(circX, circY, '--k')
     axis([-2 2 -2 2])
     axis square
     xlabel('x')
     ylabel('y')
+    hold on
     
     plot(truept.x, truept.y, '+r')
     plot(ki{i}(:, 1), ki{i}(:, 2), 'ob')
-    title(sprintf('MAP estimate for %.0f sensors',i))
-    
-    labels = {'Contours','Circle', 'True pos.', 'Landmarks'};
-    legend(labels,'Location',[0.35,0.01,0.35,0.05],'Orientation','Horizontal')
-    hold off
+    title('MAP estimate for ')
 end
-
 %% display the runtime for the whole program
 timeEnd = cputime - timeStart;
 fprintf('Total runtime: %0.3f s\n', timeEnd)

@@ -2,12 +2,12 @@ function R = GenerateRange(posTrue, posGen, K, sigma)
 %GENERATERANGE Summary of this function goes here
 %   Detailed explanation goes here
 
+posTrue = [posTrue.x,posTrue.y];
 R = repmat(-1, 1, K);   % generate a matrix of all -1
 posi = posTrue - posGen;
 posi = vecnorm(posi, 2, 2);
 R = posi + (sigma .* randn(K,1));
 
-i = 1;
 while any(R < 0) % while any element in R is less than 0
     
     lt0 = R < 0;

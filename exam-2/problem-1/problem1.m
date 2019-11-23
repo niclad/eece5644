@@ -44,7 +44,7 @@ dataTest  = data(1:testLen,:);      % for testing data, get observations at rows
 dataTrain = data(testLen+1:end,:);  % get the rest of the data for training
 
 %% Regular tree (no bagging, no boosting)
-
+treeStart = cputime;
 % treeMdl = fitctree(dataTrain(:,1:end-1), dataTrain(:,end), ...
 %     'MaxNumSplits', 11, 'PredictorSelection', 'allsplits', ...
 %     'PruneCriterion', 'impurity', 'SplitCriterion', 'gdi');
@@ -52,10 +52,6 @@ treeMdl = train_tree(dataTrain);
 
 %% plot tree, boundaries, and confusion matrix
 before = findall(groot,'Type','figure'); % Find all figures
-
-% display time to generate the tree
-timeDefTree = cputime - timeStart;
-fprintf('Default tree time: %0.3f s\n', timeDefTree)
 
 % view the decision tree
 view(treeMdl,'Mode','graph')    % no customization options
@@ -93,6 +89,10 @@ confusionchart(C);                              % display the confusion matrix
 title({'Test data confusion matrix for a','tree w/o boosting or bagging'})
 saveas(gcf,'images/default_confmat','epsc')     % save firgure as a colored eps file
 
+% display time to generate the tree
+timeDefTree = cputime - treeStart;
+fprintf('Default tree time: %0.3f s\n', timeDefTree)
+
 %% self implementation of tree - irrelevant
 % my_tree = build_tree(dataTrain, 4);
 % print_tree(my_tree, "");
@@ -110,13 +110,9 @@ saveas(gcf,'images/default_confmat','epsc')     % save firgure as a colored eps 
 % gscatter(dataTest(:,1), dataTest(:,2), dataTest(:,3), 'mg', 'xo')
 
 %% bagging decision tree
-
+treeStart = cputime;
 % train trees
 treeMdls   = bag_tree(dataTrain,7);
-
-% display time to generate the tree
-timeBagTree = cputime - timeStart;
-fprintf('Bagging tree time: %0.3f s\n', timeBagTree)
 
 % predict results for training data
 predLabels = bag_predict(treeMdls,dataTest(:,1:end-1));
@@ -142,14 +138,14 @@ axis([-4 4 -4 4])
 hold off
 saveas(gcf,'images/bag_tree','epsc')    % save firgure as a colored eps file
 
-%% adaboost decision tree
+% display time to generate the tree
+timeBagTree = cputime - treeStart;
+fprintf('Bagging tree time: %0.3f s\n', timeBagTree)
 
+%% adaboost decision tree
+treeStart = cputime;
 % train the AdaBoost tree classifier
 [abMdls, ifW] = ab_tree(dataTrain,7);
-
-% display time to generate the tree
-timeAbTree = cputime - timeStart;
-fprintf('AdaBoost tree time: %0.3f s\n', timeAbTree)
 
 % classify testing data
 abPred = ab_predict(abMdls, dataTest(:,1:end-1));
@@ -174,6 +170,10 @@ grid on
 axis([-4 4 -4 4])
 hold off
 saveas(gcf,'images/ab_tree','epsc')    % save firgure as a colored eps file
+
+% display time to generate the tree
+timeAbTree = cputime - treeStart;
+fprintf('AdaBoost tree time: %0.3f s\n', timeAbTree)
 
 %% display the runtime for the whole program
 timeEnd = cputime - timeStart;
