@@ -1,10 +1,10 @@
 # EECE 5644 Project: School Type Based on Direct Loan Volume 💵💯💵
-All the files for my project for EECE 5644. Information about the directories and how to run this information is included below.
+All the files for my project for EECE 5644. Information about the directories and how to run this information is included below. 💵💯💵
 
 # How to run the project ▶
 Everything is written in Matlab, so if you dont have Matlab, get that set up.
 
-Next, download everything, specifically the Excel file containing the data in the [data](data) directory and the Matlab script, [laon_project.m](loan_project.m).
+Next, download everything, specifically the Excel file containing the data in the [data](data) directory and the Matlab script, [loan_project.m](loan_project.m).
 Also, download everything in the functions folder. These are all the functions that are specified outside of the main script file (loan_project). (Note that as of 2019-12-01, there are no functions written.)
 
 For the program to run as expected, this file strtucture *must* be preserved. I recommend downloading a zip of the whole thing and just running this one script, in the folder, as-is. See the comments within the Matlab file for more information.
