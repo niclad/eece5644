@@ -1,4 +1,4 @@
-# EECE 5644 Project: School Type Based on Direct Loan Volume
+# EECE 5644 Project: School Type Based on Direct Loan Volume 💵💯💵
 All the files for my project for EECE 5644. Information about the directories and how to run this information is included below.
 
 # How to run the project ▶
