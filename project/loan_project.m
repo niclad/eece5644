@@ -3,10 +3,17 @@
 % December 4, 2019
 % Final Project
 
+clear all
+close all
+
 %% start timing
 timeStart = cputime;
 
+% add the functions path
+addpath(genpath('./functions/'))
+
 % surpress warnings
+fprintf('============================\n')
 warning('off','all');
 warning
 %{
@@ -106,11 +113,15 @@ for i = 1:length(categories(dataCats))
     lbls(cf) = i;
 end
 
-dataTrain = rawdata(1:ceil(0.7 * nRows),6:end);%totals(1:ceil(0.7 * nRows),:);
+dataTrain = table2array(rawdata(1:ceil(0.7 * nRows),6:end));%totals(1:ceil(0.7 * nRows),:);
 labelTrain = lbls(1:ceil(0.7 * nRows));%rawdata(1:ceil(0.7 * nRows),3);
 
-dataTest = rawdata(ceil(0.7 * nRows)+1:end,6:end);%totals(ceil(0.7 * nRows)+1:end,:);
+dataTest = table2array(rawdata(ceil(0.7 * nRows)+1:end,6:end));%totals(ceil(0.7 * nRows)+1:end,:);
 labelTest = lbls(ceil(0.7 * nRows)+1:end);%rawdata(ceil(0.7 * nRows)+1:end,3);
+
+% full data
+dataFull  = table2array(rawdata(:,6:end));
+labelFull = lbls(:);
 
 %% get response variable as zipcode
 % respvar = rawdata{:,4};     % make the zipcode the response variable
@@ -147,36 +158,76 @@ fprintf('>Training ensembles...\n')
 noCVStart = cputime;            % get the start time of the first ensemble
 
 t = templateTree('Reproducible',true);
+if ~exist('mdl') && ~exist('mdlCV') && ~exist('mdlCVTrain')
+    % train an ensemble of bagged trees without corss validation
+    mdl   = fitcensemble(dataTrain, labelTrain, 'Method', 'Bag', ...
+        'NumLearningCycles',200,'Learners',t);
 
-% train an ensemble of bagged trees without corss validation
-mdl   = fitcensemble(dataTrain, labelTrain, 'Method', 'Bag', ...
-    'NumLearningCycles',200,'Learners',t);
+    noCVTime = cputime - noCVStart; % get the amount of time it takes to train an ensemble w/o cv
+    cvStart  = cputime;             % get the start time for the next ensemble
 
-noCVTime = cputime - noCVStart; % get the amount of time it takes to train an ensemble w/o cv
-cvStart  = cputime;             % get the start time for the next ensemble
+    % train an ensemble of bagged trees with cross-validation
+    mdlCV = fitcensemble(dataFull, labelFull, 'Method', 'Bag', ...
+        'NumLearningCycles',200, 'KFold', 10,'Learners',t);
+    
+    % train an ensemble of bagged trees with cross-validation
+    mdlCVTrain = fitcensemble(dataTrain, labelTrain, 'Method', 'Bag', ...
+        'NumLearningCycles',200, 'KFold', 10,'Learners',t);
 
-% train an ensemble of bagged trees with cross-validation
-mdlCV = fitcensemble(dataTrain, labelTrain, 'Method', 'Bag', ...
-    'NumLearningCycles',200, 'KFold', 10,'Learners',t);
+    cvEnd = cputime - cvStart;      % get the amount of time it takes to train an ensemble w/ cv
 
-cvEnd = cputime - cvStart;      % get the amount of time it takes to train an ensemble w/ cv
-
-fprintf("Bagged tree training time: %.2f seconds\nCV bagged tree training time: %.2f seconds\n",...
-    noCVTime, cvEnd)
-fprintf('>Ensembles training completed.\n')
+    fprintf("Bagged tree training time: %.2f seconds\nCV bagged tree training time: %.2f seconds\n",...
+        noCVTime, cvEnd)
+    fprintf('>Ensembles training completed.\n')
+end
 
 % view classification error
 fprintf('>Plotting error...\n')
 plot(loss(mdl,dataTest, labelTest, 'mode','cumulative'),'b-')
 hold on
-plot(kfoldLoss(mdlCV,'mode','cumulative'),'r.')
+plot(kfoldLoss(mdlCV,'mode','cumulative'),'r-')
 xlabel('Number of trees')
 ylabel('Test classification error')
-legend('Test','Cross-validation','Location','NE')
+legend('No CV','Cross-validation','Location','NE')
 title(["Matlab's Bagged trees", "with and without crossvalidation"])
+saveas(gcf,'images/train_error.png') 
 hold off
 fprintf('>Error plotted.\n')
+
+%% get details about the classification 
+fprintf('>Plotting confusion matrix...\n')
+[predLbls, score] = kfoldPredict(mdlCV);
+cfmat = confusionmat(labelFull, predLbls);
+confusionchart(cfmat, categories(dataCats));
+title({'Class predictions confusion matrix',...
+    'on complete data'})
+saveas(gcf,'images/confmat_full.png')
+
+[predTrain, score] = kfoldPredict(mdlCVTrain);
+cfmatTrain = confusionmat(labelTrain, predTrain);
+confusionchart(cfmatTrain, categories(dataCats));
+title({'Class predictions confusion matrix',...
+    'on train data'})
+saveas(gcf,'images/confmat_train.png') 
+
+% predict labels for test data
+predTest = bag_predict(mdlCVTrain.Trained, dataTest);
+cfmatTest = confusionmat(labelTest, predTest);
+confusionchart(cfmatTest, categories(dataCats));
+title({'Class predictions confusion matrix',...
+    'on test data'})
+saveas(gcf,'images/confmat_test.png') 
+fprintf('>confmat plotted.\n')
+
+%% Display loss for the trained classifiers
+mdlLoss  = loss(mdl, dataTest, labelTest);
+cvLoss   = kfoldLoss(mdlCV);
+testLoss = avg_loss(mdlCVTrain.Trained, dataTest, labelTest);
+fprintf("No CV model loss = %.3f\n", mdlLoss)
+fprintf("CV model loss = %.3f\n", cvLoss)
+fprintf("CV model loss on test data = %.3f\n", testLoss)
 
 %% display run time
 timeEnd = cputime - timeStart;
 fprintf("Total runtime: %.2f seconds\n", timeEnd)
+fprintf('============================\n')
