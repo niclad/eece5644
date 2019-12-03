@@ -3,7 +3,7 @@
 % December 4, 2019
 % Final Project
 
-clear all
+%clear all
 close all
 
 %% start timing
@@ -227,6 +227,31 @@ fprintf("No CV model loss = %.3f\n", mdlLoss)
 fprintf("CV model loss = %.3f\n", cvLoss)
 fprintf("CV model loss on test data = %.3f\n", testLoss)
 
+%% try with grouped foreign schools
+cats    = categories(dataCats);     % get the categories from the data labels
+oldCats = cats(1:3);                % get the categories we want to group
+newCats = mergecats(dataCats, oldCats, "Foreign");  % replace all the "foreign(\w*)" categories
+
+% generate new testing and training data
+dataTrain = table2array(rawdata(1:ceil(0.7 * nRows),6:end));%totals(1:ceil(0.7 * nRows),:);
+labelTrain = newCats(1:ceil(0.7 * nRows));%rawdata(1:ceil(0.7 * nRows),3);
+
+dataTest = table2array(rawdata(ceil(0.7 * nRows)+1:end,6:end));%totals(ceil(0.7 * nRows)+1:end,:);
+labelTest = newCats(ceil(0.7 * nRows)+1:end);%rawdata(ceil(0.7 * nRows)+1:end,3);
+
+% train a new model
+catMdl = fitcensemble(dataTrain, labelTrain, 'Method', 'Bag', ...
+        'NumLearningCycles',200,'Learners',t);
+    
+% plot confmats
+[predLbls, score] = predict(catMdl, dataTest);
+cfmat = confusionmat(labelTest, predLbls);
+confusionchart(cfmat, categories(newCats));
+title({'Class predictions confusion matrix',...
+    'on merged data'})
+saveas(gcf,'images/confmat_merge.png')
+mergeLoss = loss(catMdl, dataTest, labelTest);
+fprintf("Merge model loss = %.3f\n", mergeLoss)
 %% display run time
 timeEnd = cputime - timeStart;
 fprintf("Total runtime: %.2f seconds\n", timeEnd)
