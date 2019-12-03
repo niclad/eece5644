@@ -12,7 +12,7 @@ For the program to run as expected, this file strtucture *must* be preserved. I 
 # Directories 📂
 Information about each directory below.
 
-## all_files
+## all_files 🤐
 This is a compressed folder with all the files. This is included so that, if one desires, they don't have to download the *whole* repository to get this one project. The zip-file was created right before the last commit, so it should be up-to-date.
 
 ## data 🎁
