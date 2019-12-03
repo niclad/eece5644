@@ -9,6 +9,8 @@ Also, download everything in the functions folder. These are all the functions t
 
 For the program to run as expected, this file strtucture *must* be preserved. I recommend downloading a zip of the whole thing and just running this one script, in the folder, as-is. See the comments within the Matlab file for more information.
 
+**Note:** Any differences between report data and data from an initial run is likely due to the Matlab's random number generation.
+
 # Directories 📂
 Information about each directory below.
 
